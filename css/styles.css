@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Squada+One&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-family: "Squada One", Helvetica, sans-serif;
+  --main-blue: rgba(10, 186, 181, 1);
+  --main-orange: rgba(255, 127, 80, 1);
+  --main-white: rgba(255, 255, 255, 0.9);
+  --trans-black: rgba(0, 0, 0, 0.5);
+}
+
+html {
+  background-color: rgba(255, 127, 80, 1);
+  background-color: var(--main-orange);
+}
+
+body {
+  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--main-white);
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 20px 5px var(--trans-black);
+  font-family: "Squada One", Helvetica, sans-serif;
+  font-family: var(--font-family);
+  margin: 0 auto;
+  min-height: 100vh;
+  max-width: 1200px;
+  padding: 2rem 0;
+  width: 80%;
+}
+
+header {
+  color: rgba(10, 186, 181, 1);
+  color: var(--main-blue);
+  font-size: 1.8rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  -webkit-text-stroke: 0.01rem var(--trans-black);
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 2rem auto 0;
+  width: 90%;
+}
+
+#img-container {
+  flex: 1 1 400px;
+  max-width: 620px;
+  width: 80%;
+}
+
+#img {
+  width: 100%;
+}
+
+#slider {
+  cursor: pointer;
+  margin: 2rem 50%;
+  transform: translateX(-50%);
+  width: 75%;
+}
+
+#options {
+  flex: 1 1 180px;
+  max-width: 220px;
+  width: 20%;
+}
+
+.btn {
+  background-color: rgba(255, 127, 80, 1);
+  background-color: var(--main-orange);
+  border: 1px solid black;
+  color: black;
+  cursor: pointer;
+  font-family: "Squada One", Helvetica, sans-serif;
+  font-family: var(--font-family);
+  font-size: 1.5rem;
+  margin: 0 0.8rem;
+  padding: 0.8rem;
+  width: 100%;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: rgba(225, 97, 50, 1);
+  color: rgba(255, 255, 255, 0.9);
+  color: var(--main-white);
+  transition: color 75ms ease-out, background 200ms ease-out;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+/*
+    =============
+    MEDIA QUERIES
+    =============
+*/
+
+@media only screen and (max-width: 600px) {
+  body {
+    width: 100%;
+  }
+
+  main {
+    width: 90%;
+  }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Editor</title>
+    <link rel="shortcut icon" type="image/png" href="./img/favicon.png" />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Image Editor</h1>
+    </header>
+    <main>
+      <section id="img-container">
+        <img src="./img/static.jpg" alt="Image to be edited." id="img" />
+        <input type="range" name="slider" id="slider" min="0" max="20" value="0" />
+      </section>
+      <section id="options">
+        <button class="btn" value="blur">Blur</button>
+        <button class="btn" value="brightness">Brightness</button>
+        <button class="btn" value="contrast">Contrast</button>
+        <button class="btn" value="grayscale">Grayscale</button>
+        <button class="btn" value="hueRotate">Hue Rotation</button>
+        <button class="btn" value="invert">Invert</button>
+        <button class="btn" value="opacity">Opacity</button>
+        <button class="btn" value="saturate">Saturation</button>
+        <button class="btn" value="sepia">Sepia</button>
+      </section>
+    </main>
+
+    <script type="module" src="./scripts/index.js" defer></script>
+  </body>
+</html>
