@@ -14,10 +14,18 @@
     <main>
       <section id="img-container">
         <img src="./img/static.jpg" alt="Image to be edited." id="img" />
-        <input type="range" name="slider" id="slider" min="0" max="20" value="0" />
+        <div id="slider-container">
+          <span id="slider-min" class="slider-span">0</span>
+          <div id="slider-and-bubble">
+            <input type="range" name="slider" id="slider" min="0" max="20" value="0" />
+            <span id="slider-bubble">0</span>
+          </div>
+          <span id="slider-max" class="slider-span">20</span>
+          <p id="current-filter">BLUR</p>
+        </div>
       </section>
       <section id="options">
-        <button class="btn" value="blur">Blur</button>
+        <button class="btn" value="blur" autofocus>Blur</button>
         <button class="btn" value="brightness">Brightness</button>
         <button class="btn" value="contrast">Contrast</button>
         <button class="btn" value="grayscale">Grayscale</button>

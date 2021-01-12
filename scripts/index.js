@@ -4,6 +4,10 @@ window.addEventListener("load", () => {
   //Element variables
   const img = document.getElementById("img");
   const slider = document.getElementById("slider");
+  const sliderMin = document.getElementById("slider-min");
+  const sliderMax = document.getElementById("slider-max");
+  const sliderBubble = document.getElementById("slider-bubble");
+  const currentFilter = document.getElementById("current-filter");
   const btns = document.querySelectorAll(".btn");
 
   //Create Filter objects
@@ -23,12 +27,21 @@ window.addEventListener("load", () => {
   let selection = "blur";
 
   //apply filters when user adjusts range slider
-  slider.onchange = adjustSettings;
+  slider.oninput = adjustSettings;
 
   //Pass range slider value to selection's applyChange method
   function adjustSettings(e) {
     const newVal = e.target.value;
+    moveBubble(newVal);
     filters[selection].applyChange(img, newVal);
+  }
+
+  //function to adjust position of slider bubble
+  function moveBubble(val) {
+    //(${8 - newVal * 0.15}px)
+    const newVal = (val / filters[selection].max) * 100;
+    sliderBubble.style.left = `calc(${newVal}% + (${7 - newVal * 0.15}px))`;
+    sliderBubble.textContent = val;
   }
 
   //Apply click listeners to each button
@@ -36,8 +49,19 @@ window.addEventListener("load", () => {
   //Update slider based on values for the corresponding filter object
   btns.forEach((elem) => {
     elem.addEventListener("click", () => {
+      //Remove selected class from any element which has it
+      btns.forEach((elem) => {
+        if (elem.classList.contains("selectedBtn")) {
+          elem.classList.remove("selectedBtn");
+        }
+      });
+
+      //Apply selected styles to current element
+      elem.classList.add("selectedBtn");
+      elem.focus();
+
       selection = elem.value;
-      filters[selection].changeSelection(slider);
+      filters[selection].changeSelection(sliderMin, sliderMax, slider, currentFilter, elem.textContent, sliderBubble);
     });
   });
 });

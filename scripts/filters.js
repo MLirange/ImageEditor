@@ -40,7 +40,13 @@ export default class Filter {
   };
 
   //Update range slider based on current selection
-  changeSelection = (slider) => {
+  changeSelection = (sliderMin, sliderMax, slider, currentFilter, filterText, sliderBubble) => {
+    const newVal = (this.currVal / this.max) * 100;
+    sliderMin.textContent = this.min;
+    sliderMax.textContent = this.max;
+    currentFilter.textContent = filterText.toUpperCase();
+    sliderBubble.textContent = this.currVal;
+    sliderBubble.style.left = `calc(${newVal}% + (${7 - newVal * 0.15}px))`;
     slider.min = this.min;
     slider.max = this.max;
     slider.value = this.currVal;
