@@ -2,13 +2,44 @@ import Filter from "./filters.js";
 
 window.addEventListener("load", () => {
   //Element variables
-  const img = document.getElementById("img");
+  const canvas = document.getElementById("canvas");
+  const uploader = document.getElementById("uploader");
   const slider = document.getElementById("slider");
   const sliderMin = document.getElementById("slider-min");
   const sliderMax = document.getElementById("slider-max");
   const sliderBubble = document.getElementById("slider-bubble");
   const currentFilter = document.getElementById("current-filter");
   const btns = document.querySelectorAll(".btn");
+
+  //Draw image on canvas
+  const ctx = canvas.getContext("2d");
+  const image = new Image();
+  image.src = "./img/static.jpg";
+  image.addEventListener("change", renderImage(image));
+
+  function renderImage(image) {
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    ctx.drawImage(image, 0, 0);
+  }
+
+  uploader.addEventListener("change", (e) => {
+    if (e.target.files) {
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onloadend = (e) => {
+        const newImage = new Image();
+        newImage.src = e.target.result;
+        newImage.onload = () => {
+          canvas.width = newImage.naturalWidth;
+          canvas.height = newImage.naturalHeight;
+          ctx.drawImage(newImage, 0, 0);
+        };
+        //newImage.addEventListener("load", renderImage(newImage));
+      };
+    }
+  });
 
   //Create Filter objects
   const filters = {
@@ -33,7 +64,7 @@ window.addEventListener("load", () => {
   function adjustSettings(e) {
     const newVal = e.target.value;
     moveBubble(newVal);
-    filters[selection].applyChange(img, newVal);
+    filters[selection].applyChange(canvas, newVal);
   }
 
   //function to adjust position of slider bubble

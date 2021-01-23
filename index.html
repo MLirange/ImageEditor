@@ -13,7 +13,12 @@
     </header>
     <main>
       <section id="img-container">
+        <canvas id="canvas"></canvas>
         <img src="./img/static.jpg" alt="Image to be edited." id="img" />
+        <div id="upload-container">
+          <label for="uploader" id="uploader-btn">Upload</label>
+          <input type="file" name="uploader" id="uploader" accept="image/*" />
+        </div>
         <div id="slider-container">
           <span id="slider-min" class="slider-span">0</span>
           <div id="slider-and-bubble">
