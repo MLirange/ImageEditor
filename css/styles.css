@@ -85,7 +85,14 @@ canvas {
   background-color: var(--main-blue);
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1.5rem;
   padding: 0.5rem 1rem;
+  transition: background-color 200ms ease-out;
+}
+
+#uploader-btn:hover {
+  background-color: var(--main-white);
+  border: 2px solid var(--main-blue);
 }
 
 #uploader {

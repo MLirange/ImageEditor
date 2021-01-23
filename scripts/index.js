@@ -57,7 +57,8 @@ window.addEventListener("load", () => {
       filters[prop].applyChange(canvas, newVal);
       filters[prop].changeSelection(sliderMin, sliderMax, slider, currentFilter, prop, sliderBubble);
     }
-    filters[selection].changeSelection(sliderMin, sliderMax, slider, currentFilter, selection, sliderBubble);
+    const sliderText = document.querySelector(".selectedBtn").textContent;
+    filters[selection].changeSelection(sliderMin, sliderMax, slider, currentFilter, sliderText, sliderBubble);
   }
 
   //Create Filter objects
