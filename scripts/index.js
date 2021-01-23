@@ -69,7 +69,7 @@ window.addEventListener("load", () => {
 
   //Create Filter objects
   const filters = {
-    blur: new Filter(0, 20, 0, "blur", "px"),
+    blur: new Filter(0, 10, 0, "blur", "px"),
     brightness: new Filter(0, 200, 100, "brightness", "%"),
     contrast: new Filter(0, 200, 100, "contrast", "%"),
     grayscale: new Filter(0, 100, 0, "grayscale", "%"),
