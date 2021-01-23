@@ -79,7 +79,7 @@ canvas {
   display: flex;
   justify-content: space-around;
   margin: 1.5rem auto 0;
-  width: 60%;
+  width: 80%;
 }
 
 .load-save-btns,
