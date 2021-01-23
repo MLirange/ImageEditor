@@ -32,12 +32,11 @@ window.addEventListener("load", () => {
         const newImage = new Image();
         newImage.src = e.target.result;
         newImage.onload = () => {
-          canvas.width = newImage.naturalWidth;
-          canvas.height = newImage.naturalHeight;
-          ctx.drawImage(newImage, 0, 0);
+          renderImage(newImage);
         };
-        //newImage.addEventListener("load", renderImage(newImage));
       };
+    } else {
+      alert("Upload failed");
     }
   });
 
