@@ -23,6 +23,7 @@ window.addEventListener("load", () => {
     ctx.drawImage(image, 0, 0);
   }
 
+  //handle file uploads, redraw canvas
   uploader.addEventListener("change", (e) => {
     if (e.target.files) {
       const image = e.target.files[0];
@@ -33,12 +34,31 @@ window.addEventListener("load", () => {
         newImage.src = e.target.result;
         newImage.onload = () => {
           renderImage(newImage);
+          resetVals();
         };
       };
     } else {
       alert("Upload failed");
     }
   });
+
+  //reset values on upload
+  function resetVals() {
+    for (let prop in filters) {
+      let newVal = 0;
+      switch (prop) {
+        case "brightness":
+        case "contrast":
+        case "opacity":
+        case "saturate":
+          newVal = 100;
+          break;
+      }
+      filters[prop].applyChange(canvas, newVal);
+      filters[prop].changeSelection(sliderMin, sliderMax, slider, currentFilter, prop, sliderBubble);
+    }
+    filters[selection].changeSelection(sliderMin, sliderMax, slider, currentFilter, selection, sliderBubble);
+  }
 
   //Create Filter objects
   const filters = {
