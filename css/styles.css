@@ -83,6 +83,7 @@ canvas {
 
 #uploader-btn {
   background-color: var(--main-blue);
+  border: 2px solid var(--main-blue);
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.5rem;
@@ -92,7 +93,6 @@ canvas {
 
 #uploader-btn:hover {
   background-color: var(--main-white);
-  border: 2px solid var(--main-blue);
 }
 
 #uploader {

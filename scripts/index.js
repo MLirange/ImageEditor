@@ -42,7 +42,7 @@ window.addEventListener("load", () => {
     }
   });
 
-  //reset values on upload
+  //reset all values on upload
   function resetVals() {
     for (let prop in filters) {
       let newVal = 0;
