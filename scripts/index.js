@@ -4,6 +4,7 @@ window.addEventListener("load", () => {
   //Element variables
   const canvas = document.getElementById("canvas");
   const uploader = document.getElementById("uploader");
+  const saveBtn = document.getElementById("save");
   const slider = document.getElementById("slider");
   const sliderMin = document.getElementById("slider-min");
   const sliderMax = document.getElementById("slider-max");
@@ -26,14 +27,13 @@ window.addEventListener("load", () => {
   //handle file uploads, redraw canvas
   uploader.addEventListener("change", (e) => {
     if (e.target.files) {
-      const image = e.target.files[0];
+      const newImage = e.target.files[0];
       const reader = new FileReader();
-      reader.readAsDataURL(image);
+      reader.readAsDataURL(newImage);
       reader.onloadend = (e) => {
-        const newImage = new Image();
-        newImage.src = e.target.result;
-        newImage.onload = () => {
-          renderImage(newImage);
+        image.src = e.target.result;
+        image.onload = () => {
+          renderImage(image);
           resetVals();
         };
       };
@@ -42,7 +42,8 @@ window.addEventListener("load", () => {
     }
   });
 
-  //reset all values on upload
+  //Reset all values on upload
+  //Keep user on current filter selection
   function resetVals() {
     for (let prop in filters) {
       let newVal = 0;
@@ -54,11 +55,17 @@ window.addEventListener("load", () => {
           newVal = 100;
           break;
       }
-      filters[prop].applyChange(canvas, newVal);
+      filters[prop].applyChange(ctx, image, newVal);
     }
     const sliderText = document.querySelector(".selectedBtn").textContent;
     filters[selection].changeSelection(sliderMin, sliderMax, slider, currentFilter, sliderText, sliderBubble);
   }
+
+  //Save Image
+  saveBtn.addEventListener("click", () => {
+    saveBtn.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    saveBtn.download = "ImageEditor.png";
+  });
 
   //Create Filter objects
   const filters = {
@@ -83,7 +90,7 @@ window.addEventListener("load", () => {
   function adjustSettings(e) {
     const newVal = e.target.value;
     moveBubble(newVal);
-    filters[selection].applyChange(canvas, newVal);
+    filters[selection].applyChange(ctx, image, newVal);
   }
 
   //function to adjust position of slider bubble

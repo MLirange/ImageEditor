@@ -76,22 +76,30 @@ canvas {
 }
 
 #upload-container {
+  display: flex;
+  justify-content: space-around;
   margin: 1.5rem auto 0;
-  text-align: center;
   width: 60%;
 }
 
-#uploader-btn {
+.load-save-btns,
+.load-save-btns:active,
+.load-save-btns:focus {
   background-color: var(--main-blue);
   border: 2px solid var(--main-blue);
   border-radius: 5px;
+  color: inherit;
   cursor: pointer;
+  font-family: var(--font-family);
   font-size: 1.5rem;
   padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
   transition: background-color 200ms ease-out;
+  width: 100px;
 }
 
-#uploader-btn:hover {
+.load-save-btns:hover {
   background-color: var(--main-white);
 }
 

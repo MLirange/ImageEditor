@@ -9,34 +9,36 @@ export default class Filter {
   }
 
   //Function to add filters to image element
-  applyChange = (img, value) => {
+  applyChange = (ctx, image, value) => {
     //do not allow values larger than max
     value = value <= this.max ? value : this.max;
 
     //Filter to be applied
-    const newFilter = ` ${this.action}(${value}${this.unit}) `;
+    const newFilter = `${this.action}(${value}${this.unit})`;
 
     //Establish filter if none exists
-    if (!img.style.filter) {
-      img.style.filter = newFilter;
+    if (ctx.filter === "none") {
+      ctx.filter = newFilter;
     }
 
     //Check if current selection already exists
     //Update string if filter has already been applied
     //Otherwise append new filter to existing style
-    if (img.style.filter.indexOf(this.action) !== -1) {
-      const index = img.style.filter.indexOf(this.action);
-      const lastIndex = img.style.filter.indexOf(")", index) + 1;
-      const subStr = img.style.filter.substring(index, lastIndex);
-      const updatedFilter = img.style.filter.replace(subStr, newFilter);
+    if (ctx.filter.indexOf(this.action) !== -1) {
+      const index = ctx.filter.indexOf(this.action);
+      const lastIndex = ctx.filter.indexOf(")", index) + 1;
+      const subStr = ctx.filter.substring(index, lastIndex);
+      const updatedFilter = ctx.filter.replace(subStr, newFilter);
 
-      img.style.filter = updatedFilter;
+      ctx.filter = updatedFilter;
     } else {
-      img.style.filter += newFilter;
+      ctx.filter += newFilter;
     }
 
     //Update current value of selection
     this.currVal = value;
+
+    ctx.drawImage(image, 0, 0);
   };
 
   //Update range slider based on current selection
