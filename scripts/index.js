@@ -5,12 +5,68 @@ window.addEventListener("load", () => {
   const canvas = document.getElementById("canvas");
   const uploader = document.getElementById("uploader");
   const saveBtn = document.getElementById("save");
-  const slider = document.getElementById("slider");
-  const sliderMin = document.getElementById("slider-min");
-  const sliderMax = document.getElementById("slider-max");
-  const sliderBubble = document.getElementById("slider-bubble");
-  const currentFilter = document.getElementById("current-filter");
+  const options = document.getElementById("options");
+
+  //Create Filter objects
+  const filters = {
+    blur: new Filter(0, 20, 0, "blur", "px", "blur"),
+    brightness: new Filter(0, 200, 100, "brightness", "%", "brightness"),
+    contrast: new Filter(0, 200, 100, "contrast", "%", "contrast"),
+    grayscale: new Filter(0, 100, 0, "grayscale", "%", "grayscale"),
+    hueRotate: new Filter(0, 360, 0, "hue-rotate", "deg", "hue rotation"),
+    invert: new Filter(0, 100, 0, "invert", "%", "invert"),
+    //opacity: new Filter(0, 100, 100, "opacity", "%"),
+    saturate: new Filter(0, 200, 100, "saturate", "%", "saturation"),
+    sepia: new Filter(0, 100, 0, "sepia", "%", "sepia"),
+  };
+
+  //Create filter option elements
+  for (let prop in filters) {
+    //Create parent element
+    const menuOption = document.createElement("div");
+    if (prop === "blur") menuOption.classList.add("selectedBtn");
+    menuOption.classList.add("btn");
+    menuOption.value = prop;
+    menuOption.textContent = filters[prop].label;
+
+    //Create slider group
+    const sliderGroup = document.createElement("div");
+    sliderGroup.classList.add("slider-container");
+    if (prop !== "blur") sliderGroup.classList.add("slider-hidden");
+
+    const sliderMin = document.createElement("span");
+    sliderMin.classList.add("slider-span");
+    sliderMin.textContent = "0";
+    sliderGroup.appendChild(sliderMin);
+
+    const sliderAndBubble = document.createElement("div");
+    sliderAndBubble.classList.add("slider-and-bubble");
+
+    const slider = document.createElement("input");
+    slider.classList.add("slider");
+    slider.setAttribute("type", "range");
+    slider.setAttribute("name", prop);
+    slider.setAttribute("id", prop);
+    slider.setAttribute("min", filters[prop].min);
+    slider.setAttribute("max", filters[prop].max);
+    slider.setAttribute("value", filters[prop].currVal);
+    sliderAndBubble.appendChild(slider);
+
+    sliderGroup.appendChild(sliderAndBubble);
+
+    const sliderMax = document.createElement("span");
+    sliderMax.classList.add("slider-span");
+    sliderMax.textContent = filters[prop].max;
+    sliderGroup.appendChild(sliderMax);
+
+    menuOption.appendChild(sliderGroup);
+
+    options.appendChild(menuOption);
+  }
+
+  //generate nodelists of new elements
   const btns = document.querySelectorAll(".btn");
+  const sliders = document.querySelectorAll(".slider");
 
   //Draw image on canvas
   const ctx = canvas.getContext("2d");
@@ -57,8 +113,10 @@ window.addEventListener("load", () => {
       }
       filters[prop].applyChange(ctx, image, newVal);
     }
-    const sliderText = document.querySelector(".selectedBtn").textContent;
-    filters[selection].changeSelection(sliderMin, sliderMax, slider, currentFilter, sliderText, sliderBubble);
+
+    sliders.forEach((elem) => {
+      elem.value = filters[elem.id].currVal;
+    });
   }
 
   //Save Image
@@ -67,38 +125,19 @@ window.addEventListener("load", () => {
     saveBtn.download = "ImageEditor.png";
   });
 
-  //Create Filter objects
-  const filters = {
-    blur: new Filter(0, 20, 0, "blur", "px"),
-    brightness: new Filter(0, 200, 100, "brightness", "%"),
-    contrast: new Filter(0, 200, 100, "contrast", "%"),
-    grayscale: new Filter(0, 100, 0, "grayscale", "%"),
-    hueRotate: new Filter(0, 360, 0, "hue-rotate", "deg"),
-    invert: new Filter(0, 100, 0, "invert", "%"),
-    opacity: new Filter(0, 100, 100, "opacity", "%"),
-    saturate: new Filter(0, 200, 100, "saturate", "%"),
-    sepia: new Filter(0, 100, 0, "sepia", "%"),
-  };
-
-  //Start selection on blur
-  let selection = "blur";
-
   //apply filters when user adjusts range slider
-  slider.oninput = adjustSettings;
+  sliders.forEach((elem) => {
+    elem.addEventListener("input", (e) => {
+      const newVal = e.target.value;
+      const selection = e.target.id;
+      adjustSettings(newVal, selection);
+    });
+  });
 
   //Pass range slider value to selection's applyChange method
-  function adjustSettings(e) {
-    const newVal = e.target.value;
-    moveBubble(newVal);
+  function adjustSettings(newVal, selection) {
+    //moveBubble(newVal);
     filters[selection].applyChange(ctx, image, newVal);
-  }
-
-  //function to adjust position of slider bubble
-  function moveBubble(val) {
-    //(${8 - newVal * 0.15}px)
-    const newVal = (val / filters[selection].max) * 100;
-    sliderBubble.style.left = `calc(${newVal}% + (${7 - newVal * 0.15}px))`;
-    sliderBubble.textContent = val;
   }
 
   //Apply click listeners to each button
@@ -110,15 +149,14 @@ window.addEventListener("load", () => {
       btns.forEach((elem) => {
         if (elem.classList.contains("selectedBtn")) {
           elem.classList.remove("selectedBtn");
+          elem.firstElementChild.classList.add("slider-hidden");
         }
       });
 
       //Apply selected styles to current element
       elem.classList.add("selectedBtn");
+      elem.firstElementChild.classList.remove("slider-hidden");
       elem.focus();
-
-      selection = elem.value;
-      filters[selection].changeSelection(sliderMin, sliderMax, slider, currentFilter, elem.textContent, sliderBubble);
     });
   });
 });

@@ -1,6 +1,14 @@
-#slider-container {
-  margin: 2rem auto;
+.slider-container {
+  display: block;
+  margin: 0.75rem auto;
   text-align: center;
+  transform: scaleY(1);
+  transition: transform 200ms ease-out;
+}
+
+.slider-hidden {
+  display: none;
+  transform: scaleY(0);
 }
 
 .slider-span {
@@ -8,17 +16,17 @@
   margin: 0 0.3rem;
 }
 
-#slider-and-bubble {
+.slider-and-bubble {
   display: inline;
   position: relative;
 }
 
-#slider {
+.slider {
   cursor: pointer;
   width: 75%;
 }
 
-#slider-bubble {
+.slider-bubble {
   background-color: var(--main-orange);
   border-radius: 20px;
   left: 8px;

@@ -1,11 +1,12 @@
 export default class Filter {
   //prettier-ignore
-  constructor(min, max, currVal, action, unit) {
+  constructor(min, max, currVal, action, unit, label) {
     this.min = min, 
     this.max = max, 
     this.currVal = currVal, 
     this.action = action, 
-    this.unit = unit
+    this.unit = unit,
+    this.label = label
   }
 
   //Function to add filters to image element
@@ -39,18 +40,5 @@ export default class Filter {
     this.currVal = value;
 
     ctx.drawImage(image, 0, 0);
-  };
-
-  //Update range slider based on current selection
-  changeSelection = (sliderMin, sliderMax, slider, currentFilter, filterText, sliderBubble) => {
-    const newVal = (this.currVal / this.max) * 100;
-    sliderMin.textContent = this.min;
-    sliderMax.textContent = this.max;
-    currentFilter.textContent = filterText.toUpperCase();
-    sliderBubble.textContent = this.currVal;
-    sliderBubble.style.left = `calc(${newVal}% + (${7 - newVal * 0.15}px))`;
-    slider.min = this.min;
-    slider.max = this.max;
-    slider.value = this.currVal;
   };
 }
