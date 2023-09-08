@@ -1,8 +1,7 @@
 # ImageEditor
 Online Image Editor with HTML/CSS/JS
 
-Work in progress. Currently focused on the UI now that core functionality is in place.
-Further effects, user upload, and saving capabilities to be added soon.
+Work in progress. UI work was put on hold to focus on schoolwork. Uses HTML Canvas, CSS filters, and ES6 classes to allow user to alter an image. Also contains file upload and saving functionality.
 
 Live project can be found at:
 
